@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="border p-3 mt-5">
+        <div class="text-center mb-5">
+          <h1 class="bold">Task Manager</h1>
+        </div>
+        <div class="form-group">
+          <div class="mb-3">
+            <input
+              type="text"
+              name="Task"
+              id="Txt_Task"
+              class="form-control form-control-lg"
+              placeholder="Task"
+              [(ngModel)]="activeTask.Task"
+            />
+          </div>
+          <div class="mb-3">
+            <input
+              type="text"
+              name="Added By"
+              id="Txt_AddedBy"
+              class="form-control form-control-lg"
+              placeholder="Added By"
+              [(ngModel)]="activeTask.AddedBy"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            *ngIf="editMode == false"
+          >
+            Add Task
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary ms-2"
+            *ngIf="editMode == true"
+          >
+            Save
+          </button>
+          <button type="submit" class="btn btn-danger ms-2" (click)="Clear()">
+            Clear
+          </button>
+        </div>
+        <div class="mt-5">
+          <div class="border p-3 mt-3 task" *ngFor="let task of tasks">
+            <p>
+              {{ task.Task }}
+            </p>
+            <div class="btns">
+              <div class="form-check form-switch form-check-reverse">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="flexSwitchCheckReverse"
+                  [ngModel]="task.Completed"
+                  (change)="changeCompleteStatus(task.TaskID)"
+                />
+                <label class="form-check-label" for="flexSwitchCheckReverse"
+                  >Completed</label
+                >
+              </div>
+              <button
+                class="btn btn-info"
+                [disabled]="task.Completed"
+                (click)="Edit(task.TaskID)"
+              >
+                Edit
+              </button>
+              <button class="btn btn-danger" [disabled]="task.Completed">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
