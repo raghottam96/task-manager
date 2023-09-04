@@ -38,6 +38,7 @@
             type="submit"
             class="btn btn-primary"
             *ngIf="editMode == false"
+            (click)="AddTask()"
           >
             Add Task
           </button>
@@ -45,6 +46,7 @@
             type="submit"
             class="btn btn-primary ms-2"
             *ngIf="editMode == true"
+            (click)="UpdateTask()"
           >
             Save
           </button>
@@ -77,7 +79,11 @@
               >
                 Edit
               </button>
-              <button class="btn btn-danger" [disabled]="task.Completed">
+              <button
+                class="btn btn-danger"
+                [disabled]="task.Completed"
+                (click)="DeleteTask(task.TaskID)"
+              >
                 Delete
               </button>
             </div>

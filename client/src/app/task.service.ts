@@ -14,10 +14,14 @@ export class TaskService {
   }
 
   public AddTask(task: Task) {
-    return this.http.post(this.API_URL + '/AddTask', task);
+    return this.http.post(this.API_URL + 'AddTask', task);
   }
 
   public UpdateTask(task: Task) {
-    return this.http.post(this.API_URL + '/UpdateTask', task);
+    return this.http.post(this.API_URL + 'UpdateTask', task);
+  }
+
+  public DeleteTask(TaskID: number) {
+    return this.http.delete(this.API_URL + 'DeleteTask/' + TaskID);
   }
 }

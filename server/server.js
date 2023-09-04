@@ -23,14 +23,30 @@ app.get("/GetTasks", (req, res) => {
 //Add new Task
 app.post("/AddTask", (req, res) => {
 	let TaskID = GetRandomID();
+	req.body["TaskID"] = TaskID;
 	let tasks = [];
 
 	tasks = GetTasks();
-	tasks.push({ TaskID, ...req.body });
+	tasks.push(req.body);
 
 	let result = UpdateJSON(tasks);
 
 	res.send(result);
+});
+
+//Update Task
+app.post("/UpdateTask", (req, res) => {
+	let updatedTask = req.body;
+	let tasks = GetTasks();
+
+	tasks = tasks.filter((task) => {
+		return task.TaskID !== updatedTask.TaskID;
+	});
+
+	tasks.push(updatedTask);
+
+	UpdateJSON(tasks);
+	res.send("1");
 });
 
 //Delete existing Task
@@ -45,21 +61,6 @@ app.delete("/DeleteTask/:id", (req, res) => {
 
 	UpdateJSON(tasks);
 
-	res.send("1");
-});
-
-//Update Task
-app.post("/UpdateTask", (req, res) => {
-	let task = req.body;
-	let tasks = GetTasks();
-
-	tasks = tasks.filter((task) => {
-		return task.TaskID !== task.TaskID;
-	});
-
-	tasks.push(task);
-
-	UpdateJSON(tasks);
 	res.send("1");
 });
 

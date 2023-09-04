@@ -37,13 +37,50 @@ export class AppComponent implements OnInit {
     });
 
     if (filtered.length > 0) {
-      this.editMode = !this.editMode;
+      this.editMode = true;
       this.activeTask = filtered[0];
     }
   }
 
   Clear() {
     this.activeTask = new Task();
-    this.editMode = !this.editMode;
+    this.editMode = false;
+  }
+
+  AddTask() {
+    let task: Task = {
+      TaskID: 0,
+      Task: this.activeTask.Task,
+      AddedBy: this.activeTask.AddedBy,
+      Completed: false,
+    };
+
+    this.taskService.AddTask(task).subscribe((result) => {
+      this.activeTask = new Task();
+      this.GetTasks();
+    });
+  }
+
+  UpdateTask() {
+    let task: Task = {
+      TaskID: this.activeTask.TaskID,
+      Task: this.activeTask.Task,
+      AddedBy: this.activeTask.AddedBy,
+      Completed: false,
+    };
+
+    this.taskService.UpdateTask(task).subscribe((result) => {
+      this.activeTask = new Task();
+      this.GetTasks();
+      this.editMode = false;
+    });
+  }
+
+  DeleteTask(TaskID: number) {
+    this.taskService.DeleteTask(TaskID).subscribe((result) => {
+      this.activeTask = new Task();
+      this.GetTasks();
+      this.editMode = false;
+    });
   }
 }
